@@ -1,0 +1,530 @@
+[
+  {
+    "id": 1,
+    "category": "Specials",
+    "name": "Black Chana Hummus",
+    "note": "with mushroom",
+    "price": 350,
+    "available": true
+  },
+  {
+    "id": 2,
+    "category": "Specials",
+    "name": "Paneer Akuri On Sourdough",
+    "note": "",
+    "price": 310,
+    "available": true
+  },
+  {
+    "id": 3,
+    "category": "Specials",
+    "name": "Mutton Kheema Rb / Shakshouka",
+    "note": "",
+    "price": 450,
+    "available": true
+  },
+  {
+    "id": 4,
+    "category": "Risotto",
+    "name": "Mushroom",
+    "note": "",
+    "price": 380,
+    "available": true
+  },
+  {
+    "id": 5,
+    "category": "Risotto",
+    "name": "Edamame",
+    "note": "",
+    "price": 420,
+    "available": true
+  },
+  {
+    "id": 6,
+    "category": "Quesadilla",
+    "name": "Chicken",
+    "note": "",
+    "price": 420,
+    "available": true
+  },
+  {
+    "id": 7,
+    "category": "Quesadilla",
+    "name": "Malai Paneer",
+    "note": "",
+    "price": null,
+    "available": true
+  },
+  {
+    "id": 8,
+    "category": "Soups",
+    "name": "Cream Of Chicken",
+    "note": "",
+    "price": null,
+    "available": true
+  },
+  {
+    "id": 9,
+    "category": "Soups",
+    "name": "Cream Of Mushroom",
+    "note": "",
+    "price": 250,
+    "available": true
+  },
+  {
+    "id": 10,
+    "category": "Soups",
+    "name": "Cream Of Corn",
+    "note": "",
+    "price": null,
+    "available": true
+  },
+  {
+    "id": 11,
+    "category": "Salads",
+    "name": "Mega Organic Miso",
+    "note": "",
+    "price": null,
+    "available": true
+  },
+  {
+    "id": 12,
+    "category": "Salads",
+    "name": "Honey Balsamic",
+    "note": "",
+    "price": 380,
+    "available": true
+  },
+  {
+    "id": 13,
+    "category": "Beverages",
+    "name": "Sunset Espresso",
+    "note": "",
+    "price": 325,
+    "available": true
+  },
+  {
+    "id": 14,
+    "category": "Beverages",
+    "name": "Mango Matcha",
+    "note": "",
+    "price": 500,
+    "available": true
+  },
+  {
+    "id": 15,
+    "category": "Beverages",
+    "name": "Brown Sugar Matcha",
+    "note": "",
+    "price": 500,
+    "available": true
+  },
+  {
+    "id": 16,
+    "category": "Eggless Cakes",
+    "name": "Vanilla Plum Cake",
+    "note": "",
+    "price": 350,
+    "available": true
+  },
+  {
+    "id": 17,
+    "category": "Eggless Cakes",
+    "name": "Chocolate Cake",
+    "note": "",
+    "price": 320,
+    "available": true
+  },
+  {
+    "id": 18,
+    "category": "Slices",
+    "name": "Date & Walnut",
+    "note": "",
+    "price": 150,
+    "available": true
+  },
+  {
+    "id": 19,
+    "category": "Slices",
+    "name": "Banana Sesame",
+    "note": "",
+    "price": null,
+    "available": true
+  },
+  {
+    "id": 20,
+    "category": "Egg Cakes",
+    "name": "Flourless Cake",
+    "note": "",
+    "price": 350,
+    "available": true
+  },
+  {
+    "id": 21,
+    "category": "Fries",
+    "name": "House Fries",
+    "note": "",
+    "price": 250,
+    "available": true
+  },
+  {
+    "id": 22,
+    "category": "Fries",
+    "name": "Peri Peri Fries",
+    "note": "",
+    "price": 250,
+    "available": true
+  },
+  {
+    "id": 23,
+    "category": "Fries",
+    "name": "Truffle Parmesan Fries",
+    "note": "",
+    "price": 290,
+    "available": true
+  },
+  {
+    "id": 24,
+    "category": "Salads & Smoothies",
+    "name": "Caesars",
+    "note": "Mix of lettuce and focaccia croutons with an OG parmesan & mustard dressing",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 25,
+    "category": "Salads & Smoothies",
+    "name": "Katsu",
+    "note": "Lemon pepper dressing over mix lettuce & fried piece of paneer or chicken",
+    "price": 380,
+    "available": true
+  },
+  {
+    "id": 26,
+    "category": "Salads & Smoothies",
+    "name": "Spinach & Sesame",
+    "note": "Rice vinegar & sesame dressing meets vibrant baby spinach & toasted almonds",
+    "price": 370,
+    "available": true
+  },
+  {
+    "id": 27,
+    "category": "Salads & Smoothies",
+    "name": "Meat Overload",
+    "note": "Lettuce tossed in hung curd dressing with mustard bacon, sausage, grilled chicken, salami & avocado",
+    "price": 410,
+    "available": true
+  },
+  {
+    "id": 28,
+    "category": "Salads & Smoothies",
+    "name": "Not So Fixed Smoothie Bowl",
+    "note": "Greek yogurt smoothie with seasonal fruits, topped with trail mix & banana",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 29,
+    "category": "Veg Toasties",
+    "name": "Grilled Cheese With Onion Jam",
+    "note": "Classic grilled cheese with American cheddar & onion jam in shokupan",
+    "price": 330,
+    "available": true
+  },
+  {
+    "id": 30,
+    "category": "Veg Toasties",
+    "name": "Grilled Mushroom & Ajwar",
+    "note": "Grilled mixed mushrooms on a bed of ajwar sauce & a house salad, between focaccia or sourdough",
+    "price": 370,
+    "available": true
+  },
+  {
+    "id": 31,
+    "category": "Veg Toasties",
+    "name": "Paneer Katsu Sando",
+    "note": "Golden fried paneer doused in plum sauce & a crisp apple slaw between brioche bun",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 32,
+    "category": "Veg Toasties",
+    "name": "Mushroom & Cheese Melt",
+    "note": "Grilled mushrooms topped with American cheddar & pickled onion, jalapeño between focaccia",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 33,
+    "category": "Veg Toasties",
+    "name": "Avocado Toast",
+    "note": "Flattened bread topped with a blend of cream cheese, fresh avo & a nut blend",
+    "price": 420,
+    "available": true
+  },
+  {
+    "id": 34,
+    "category": "Non-Veg Toasties",
+    "name": "BLT",
+    "note": "Bacon, lettuce and tomato between focaccia",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 35,
+    "category": "Non-Veg Toasties",
+    "name": "Grilled Chicken Ajwar",
+    "note": "Harra marinated chicken served with ajvar & lettuce between focaccia",
+    "price": 390,
+    "available": true
+  },
+  {
+    "id": 36,
+    "category": "Non-Veg Toasties",
+    "name": "Chicken Katsu Sando",
+    "note": "Poached or fried chicken katsu with apple slaw & kewpie mayo between shokupan",
+    "price": 410,
+    "available": true
+  },
+  {
+    "id": 37,
+    "category": "Non-Veg Toasties",
+    "name": "Chicken & Cheese Melt",
+    "note": "Grilled chicken topped with American cheddar & pickled onion, jalapeño between focaccia",
+    "price": 400,
+    "available": true
+  },
+  {
+    "id": 38,
+    "category": "Non-Veg Toasties",
+    "name": "Classic Prawn Toast",
+    "note": "Open-faced sandwich with minced prawn & chilli oil on shokupan",
+    "price": 420,
+    "available": true
+  },
+  {
+    "id": 39,
+    "category": "Iced Coffees",
+    "name": "Latte",
+    "note": "",
+    "price": 270,
+    "available": true
+  },
+  {
+    "id": 40,
+    "category": "Iced Coffees",
+    "name": "Americano",
+    "note": "",
+    "price": 230,
+    "available": true
+  },
+  {
+    "id": 41,
+    "category": "Iced Coffees",
+    "name": "Espresso Tonic / Ginger Ale",
+    "note": "",
+    "price": 300,
+    "available": true
+  },
+  {
+    "id": 42,
+    "category": "Iced Coffees",
+    "name": "The Mocha",
+    "note": "",
+    "price": 325,
+    "available": true
+  },
+  {
+    "id": 43,
+    "category": "Iced Coffees",
+    "name": "Spanish Latte",
+    "note": "",
+    "price": 320,
+    "available": true
+  },
+  {
+    "id": 44,
+    "category": "Iced Coffees",
+    "name": "Spanish Bombon",
+    "note": "",
+    "price": 275,
+    "available": true
+  },
+  {
+    "id": 45,
+    "category": "Iced Coffees",
+    "name": "Hey Hazelnut",
+    "note": "",
+    "price": 300,
+    "available": true
+  },
+  {
+    "id": 46,
+    "category": "Iced Coffees",
+    "name": "Vanilla Me",
+    "note": "",
+    "price": 300,
+    "available": true
+  },
+  {
+    "id": 47,
+    "category": "Iced Coffees",
+    "name": "Caramel",
+    "note": "",
+    "price": 300,
+    "available": true
+  },
+  {
+    "id": 48,
+    "category": "Iced Coffees",
+    "name": "Cold Brew",
+    "note": "Ratnagiri / whiskey",
+    "price": 325,
+    "available": true
+  },
+  {
+    "id": 49,
+    "category": "Iced Coffees",
+    "name": "Cold Brew Tonic",
+    "note": "",
+    "price": 295,
+    "available": true
+  },
+  {
+    "id": 50,
+    "category": "Iced Coffees",
+    "name": "Cold Brew OJ",
+    "note": "",
+    "price": 325,
+    "available": true
+  },
+  {
+    "id": 51,
+    "category": "Iced Coffees",
+    "name": "Matcha Latte",
+    "note": "",
+    "price": 380,
+    "available": true
+  },
+  {
+    "id": 52,
+    "category": "Iced Coffees",
+    "name": "Matcha Strawberry",
+    "note": "",
+    "price": 380,
+    "available": true
+  },
+  {
+    "id": 53,
+    "category": "Iced Coffees",
+    "name": "Vietnamese Phin",
+    "note": "",
+    "price": 320,
+    "available": true
+  },
+  {
+    "id": 54,
+    "category": "Iced Coffees",
+    "name": "Affogato",
+    "note": "",
+    "price": 320,
+    "available": true
+  },
+  {
+    "id": 55,
+    "category": "Add-ons",
+    "name": "Egg",
+    "note": "",
+    "price": 30,
+    "available": true
+  },
+  {
+    "id": 56,
+    "category": "Add-ons",
+    "name": "Chicken Sausage",
+    "note": "",
+    "price": 150,
+    "available": true
+  },
+  {
+    "id": 57,
+    "category": "Add-ons",
+    "name": "Chicken Salami",
+    "note": "",
+    "price": 200,
+    "available": true
+  },
+  {
+    "id": 58,
+    "category": "Add-ons",
+    "name": "Bacon",
+    "note": "",
+    "price": 100,
+    "available": true
+  },
+  {
+    "id": 59,
+    "category": "Add-ons",
+    "name": "Prawns",
+    "note": "",
+    "price": 80,
+    "available": true
+  },
+  {
+    "id": 60,
+    "category": "Add-ons",
+    "name": "Truffle Oil",
+    "note": "",
+    "price": 50,
+    "available": true
+  },
+  {
+    "id": 61,
+    "category": "Add-ons",
+    "name": "Cheese",
+    "note": "",
+    "price": 100,
+    "available": true
+  },
+  {
+    "id": 62,
+    "category": "Add-ons",
+    "name": "Avocado",
+    "note": "",
+    "price": 50,
+    "available": true
+  },
+  {
+    "id": 63,
+    "category": "Add-ons",
+    "name": "Paneer",
+    "note": "",
+    "price": 80,
+    "available": true
+  },
+  {
+    "id": 64,
+    "category": "Add-ons",
+    "name": "Sauteed Veggies",
+    "note": "",
+    "price": 20,
+    "available": true
+  },
+  {
+    "id": 65,
+    "category": "Add-ons",
+    "name": "Bread",
+    "note": "",
+    "price": 20,
+    "available": true
+  },
+  {
+    "id": 66,
+    "category": "Add-ons",
+    "name": "Hot Sauce",
+    "note": "",
+    "price": 20,
+    "available": true
+  }
+]
