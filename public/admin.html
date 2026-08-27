@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Icaro Admin — 729 Grams Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EEDF; --paper-2:#FBF8EF; --ink:#1E2419; --ink-soft:#4B5245;
+    --forest:#24391F; --forest-2:#10190F; --moss:#7C9B67; --moss-light:#C9D6B6;
+    --clay:#B5623F; --gold:#CDA353; --gold-bright:#E6C173; --line:rgba(30,36,25,0.13);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Work Sans',sans-serif; line-height:1.5;}
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; margin:0;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  header{background:var(--forest); color:var(--paper); padding:20px 28px; display:flex; align-items:center; justify-content:space-between;}
+  header h1{font-size:20px; color:var(--paper);}
+  header .mark{background:var(--gold); color:var(--forest-2); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:10px; margin-right:8px;}
+  #lockBtn{background:none; border:1px solid rgba(244,238,223,0.4); color:var(--paper); padding:8px 14px; border-radius:100px; font-size:12px; cursor:pointer;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:32px 20px 80px;}
+
+  /* login gate */
+  #gate{max-width:360px; margin:80px auto; text-align:center;}
+  #gate input{width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line); font-size:16px; margin:16px 0;}
+  #gate button, .btn{background:var(--forest); color:var(--paper-2); border:none; padding:12px 22px; border-radius:100px; font-weight:600; cursor:pointer; font-size:14px;}
+  #gate button:hover, .btn:hover{background:var(--forest-2);}
+  #gateError{color:var(--clay); font-size:13px; min-height:18px;}
+
+  #app{display:none;}
+  .tabs{display:flex; gap:8px; margin-bottom:28px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .tab{padding:10px 18px; cursor:pointer; font-weight:600; color:var(--ink-soft); border-bottom:2px solid transparent;}
+  .tab.active{color:var(--forest); border-color:var(--gold);}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  .card{background:var(--paper-2); border:1px solid var(--line); border-radius:16px; padding:22px; margin-bottom:18px;}
+  label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:6px; font-family:'IBM Plex Mono',monospace;}
+  input, textarea, select{width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--line); font-family:'Work Sans',sans-serif; font-size:15px; margin-bottom:14px; background:#fff;}
+  textarea{min-height:80px; resize:vertical;}
+
+  .menu-cat{font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin:22px 0 8px;}
+  .menu-row{display:flex; gap:10px; align-items:center; padding:10px 0; border-top:1px dashed var(--line);}
+  .menu-row:first-of-type{border-top:none;}
+  .menu-row .name{flex:1; font-weight:500;}
+  .menu-row .note{display:block; font-size:12px; color:var(--ink-soft); font-weight:400;}
+  .menu-row input[type=number]{width:90px; margin:0;}
+  .menu-row input[type=checkbox]{width:auto; margin:0;}
+  .menu-row .icon-btn{background:none; border:none; cursor:pointer; color:var(--clay); font-size:16px;}
+  .unavailable .name{opacity:0.4; text-decoration:line-through;}
+
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th, td{text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; color:var(--ink-soft);}
+  .status-pill{font-size:11px; padding:4px 10px; border-radius:100px; font-family:'IBM Plex Mono',monospace;}
+  .status-new{background:var(--gold-bright); color:var(--forest-2);}
+  .status-confirmed{background:var(--moss-light); color:var(--forest-2);}
+  .status-cancelled{background:#e9c9b9; color:var(--clay);}
+
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--forest-2); color:var(--paper); padding:10px 20px; border-radius:100px; font-size:13px; opacity:0; transition:all .3s ease; pointer-events:none;}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .empty{color:var(--ink-soft); font-size:14px; padding:20px 0; text-align:center;}
+  .add-item-row{display:grid; grid-template-columns:1fr 1fr 100px auto; gap:10px; align-items:end;}
+  @media (max-width:640px){ .add-item-row{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1 style="margin-bottom:6px;">729 Icaro X — Admin</h1>
+  <p class="mono" style="font-size:12px; color:var(--ink-soft);">Enter the owner password to continue</p>
+  <input type="password" id="gatePassword" placeholder="Admin password" autofocus>
+  <button onclick="unlock()">Unlock</button>
+  <p id="gateError"></p>
+</div>
+
+<div id="app">
+  <header>
+    <h1><span class="mark">729</span> Icaro X — Admin</h1>
+    <button id="lockBtn" onclick="lock()">Lock</button>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab active" data-tab="special">Chef's Special</div>
+      <div class="tab" data-tab="menu">Menu</div>
+      <div class="tab" data-tab="bookings">Bookings</div>
+    </div>
+
+    <div class="panel active" id="panel-special">
+      <div class="card">
+        <label for="specialName">Today's specials (one dish per line)</label>
+        <textarea id="specialName"></textarea>
+        <label for="specialNote">Note</label>
+        <input id="specialNote" placeholder="— fresh, and usually gone by noon">
+        <button class="btn" onclick="saveSpecial()">Save — goes live for everyone</button>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-menu">
+      <div class="card">
+        <label style="margin-bottom:10px;">Add a new item</label>
+        <div class="add-item-row">
+          <div><input id="newCategory" placeholder="Category (e.g. Fries)"></div>
+          <div><input id="newName" placeholder="Item name"></div>
+          <div><input id="newPrice" type="number" placeholder="₹ price"></div>
+          <div><button class="btn" onclick="addMenuItem()">Add</button></div>
+        </div>
+      </div>
+      <div id="menuList"></div>
+    </div>
+
+    <div class="panel" id="panel-bookings">
+      <div id="bookingsList" class="card"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let ADMIN_KEY = localStorage.getItem('icaroAdminKey') || '';
+
+  function api(path, opts = {}) {
+    opts.headers = Object.assign({ 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY }, opts.headers || {});
+    return fetch(path, opts).then(async r => {
+      if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.error || r.statusText); }
+      return r.json();
+    });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  async function unlock() {
+    const pw = document.getElementById('gatePassword').value;
+    ADMIN_KEY = pw;
+    try {
+      await api('/api/bookings'); // any admin-only route works as a password check
+      localStorage.setItem('icaroAdminKey', pw);
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadAll();
+    } catch (e) {
+      document.getElementById('gateError').textContent = 'Wrong password — try again.';
+    }
+  }
+
+  function lock() {
+    localStorage.removeItem('icaroAdminKey');
+    location.reload();
+  }
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  function loadAll() {
+    loadSpecial();
+    loadMenu();
+    loadBookings();
+  }
+
+  // ---------- special ----------
+  async function loadSpecial() {
+    const s = await api('/api/special');
+    document.getElementById('specialName').value = s.name || '';
+    document.getElementById('specialNote').value = s.note || '';
+  }
+  async function saveSpecial() {
+    const name = document.getElementById('specialName').value;
+    const note = document.getElementById('specialNote').value;
+    await api('/api/special', { method: 'PUT', body: JSON.stringify({ name, note }) });
+    showToast('Saved — live on the site now');
+  }
+
+  // ---------- menu ----------
+  let menuCache = [];
+  async function loadMenu() {
+    menuCache = await api('/api/menu');
+    renderMenu();
+  }
+  function renderMenu() {
+    const el = document.getElementById('menuList');
+    if (!menuCache.length) { el.innerHTML = '<p class="empty">No menu items yet.</p>'; return; }
+    const cats = [...new Set(menuCache.map(m => m.category))];
+    el.innerHTML = cats.map(cat => {
+      const items = menuCache.filter(m => m.category === cat);
+      return `<div class="menu-cat">${cat}</div>` + items.map(m => `
+        <div class="menu-row ${m.available ? '' : 'unavailable'}" data-id="${m.id}">
+          <input type="checkbox" ${m.available ? 'checked' : ''} onchange="toggleAvailable(${m.id}, this.checked)" title="Available">
+          <span class="name">${m.name}${m.note ? `<span class="note">${m.note}</span>` : ''}</span>
+          <input type="number" value="${m.price ?? ''}" placeholder="—" onchange="updatePrice(${m.id}, this.value)">
+          <button class="icon-btn" onclick="deleteItem(${m.id})" title="Delete">✕</button>
+        </div>
+      `).join('');
+    }).join('');
+  }
+  async function toggleAvailable(id, available) {
+    await api('/api/menu/' + id, { method: 'PUT', body: JSON.stringify({ available }) });
+    showToast(available ? 'Marked available' : 'Marked sold out');
+    loadMenu();
+  }
+  async function updatePrice(id, price) {
+    await api('/api/menu/' + id, { method: 'PUT', body: JSON.stringify({ price: price === '' ? null : Number(price) }) });
+    showToast('Price updated');
+  }
+  async function deleteItem(id) {
+    if (!confirm('Remove this item from the menu?')) return;
+    await api('/api/menu/' + id, { method: 'DELETE' });
+    showToast('Item removed');
+    loadMenu();
+  }
+  async function addMenuItem() {
+    const category = document.getElementById('newCategory').value.trim();
+    const name = document.getElementById('newName').value.trim();
+    const price = document.getElementById('newPrice').value;
+    if (!category || !name) return showToast('Category and name are required');
+    await api('/api/menu', { method: 'POST', body: JSON.stringify({ category, name, price: price === '' ? null : Number(price) }) });
+    document.getElementById('newCategory').value = '';
+    document.getElementById('newName').value = '';
+    document.getElementById('newPrice').value = '';
+    showToast('Item added');
+    loadMenu();
+  }
+
+  // ---------- bookings ----------
+  async function loadBookings() {
+    const bookings = await api('/api/bookings');
+    const el = document.getElementById('bookingsList');
+    if (!bookings.length) { el.innerHTML = '<p class="empty">No bookings yet.</p>'; return; }
+    el.innerHTML = `<table>
+      <tr><th>Name</th><th>Phone</th><th>When</th><th>Guests</th><th>Note</th><th>Status</th><th></th></tr>
+      ${bookings.map(b => `
+        <tr>
+          <td>${b.name}</td>
+          <td>${b.phone}</td>
+          <td>${b.date}<br>${b.time}</td>
+          <td>${b.guests}</td>
+          <td>${b.note || '—'}</td>
+          <td><select onchange="setStatus(${b.id}, this.value)">
+            <option value="new" ${b.status==='new'?'selected':''}>New</option>
+            <option value="confirmed" ${b.status==='confirmed'?'selected':''}>Confirmed</option>
+            <option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option>
+          </select></td>
+          <td><button class="icon-btn" onclick="deleteBooking(${b.id})">✕</button></td>
+        </tr>
+      `).join('')}
+    </table>`;
+  }
+  async function setStatus(id, status) {
+    await api('/api/bookings/' + id, { method: 'PUT', body: JSON.stringify({ status }) });
+    showToast('Status updated');
+  }
+  async function deleteBooking(id) {
+    if (!confirm('Delete this booking?')) return;
+    await api('/api/bookings/' + id, { method: 'DELETE' });
+    loadBookings();
+  }
+
+  // auto-unlock if a key is already remembered
+  if (ADMIN_KEY) {
+    document.getElementById('gatePassword').value = ADMIN_KEY;
+    unlock();
+  }
+</script>
+</body>
+</html>
