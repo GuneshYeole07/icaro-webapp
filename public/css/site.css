@@ -485,6 +485,7 @@ html.js.ready .hero-foot{transition-delay:.34s;}
 .booking-card{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:34px;}
 .bk-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px 20px;}
 .bk-field.full{grid-column:1/-1;}
+.bk-trap{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
 .bk-field label{display:block; font-size:14px; font-weight:500; color:var(--cream-dim); margin-bottom:7px;}
 .bk-field input{
   width:100%; padding:13px 14px; border-radius:var(--radius); border:1px solid var(--line);

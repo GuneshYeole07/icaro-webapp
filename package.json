@@ -1,17 +1,20 @@
 {
   "name": "icaro-webapp",
   "version": "1.0.0",
-  "description": "Icaro X 729 Grams Coffee — backend + admin dashboard",
+  "description": "Icaro X 729 Grams Coffee \u2014 website, backend and admin dashboard",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.4",
+    "pg": "^8.23.1"
   }
 }
