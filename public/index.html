@@ -316,19 +316,19 @@
       <div class="bk-grid">
         <div class="bk-field">
           <label for="bkName">Name</label>
-          <input id="bkName" name="name" required autocomplete="name">
+          <input id="bkName" name="name" required minlength="2" maxlength="60" autocomplete="name">
         </div>
         <div class="bk-field">
           <label for="bkPhone">Phone (WhatsApp)</label>
-          <input id="bkPhone" name="phone" type="tel" required autocomplete="tel" placeholder="98765 43210">
+          <input id="bkPhone" name="phone" type="tel" required maxlength="20" autocomplete="tel" placeholder="98765 43210">
         </div>
         <div class="bk-field">
           <label for="bkDate">Date</label>
           <input id="bkDate" name="date" type="date" required>
         </div>
         <div class="bk-field">
-          <label for="bkTime">Time (9 AM to 8 PM)</label>
-          <input id="bkTime" name="time" type="time" min="09:00" max="20:00" required>
+          <label for="bkTime">Time (9 AM to 7:30 PM)</label>
+          <input id="bkTime" name="time" type="time" min="09:00" max="19:30" required>
         </div>
         <div class="bk-field full">
           <label for="bkGuests">Guests</label>
@@ -336,7 +336,12 @@
         </div>
         <div class="bk-field full">
           <label for="bkNote">Note (optional)</label>
-          <input id="bkNote" name="note" placeholder="High chair, birthday, window seat">
+          <input id="bkNote" name="note" maxlength="200" placeholder="High chair, birthday, window seat">
+        </div>
+        <!-- spam trap: hidden from people, bots fill it in -->
+        <div class="bk-trap" aria-hidden="true">
+          <label for="bkWebsite">Leave this field empty</label>
+          <input id="bkWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
       </div>
       <button class="btn btn-primary" type="submit" id="bkSubmit">Request table</button>

@@ -127,9 +127,20 @@
   function api(path, opts = {}) {
     opts.headers = Object.assign({ 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY }, opts.headers || {});
     return fetch(path, opts).then(async r => {
-      if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.error || r.statusText); }
+      if (!r.ok) {
+        const e = await r.json().catch(() => ({}));
+        const err = new Error(e.error || r.statusText);
+        err.status = r.status;
+        throw err;
+      }
       return r.json();
     });
+  }
+
+  // Booking names and notes are typed by the public. Escaping them stops a
+  // booking that contains HTML or script from running inside this dashboard.
+  function esc(s) {
+    return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
   }
 
   function showToast(msg) {
@@ -150,7 +161,9 @@
       document.getElementById('app').style.display = 'block';
       loadAll();
     } catch (e) {
-      document.getElementById('gateError').textContent = 'Wrong password — try again.';
+      ADMIN_KEY = '';
+      if (e.status === 401) localStorage.removeItem('icaroAdminKey');
+      document.getElementById('gateError').textContent = e.status === 401 ? 'Wrong password. Try again.' : (e.message || 'Could not unlock. Try again.');
     }
   }
 
@@ -183,8 +196,12 @@
   async function saveSpecial() {
     const name = document.getElementById('specialName').value;
     const note = document.getElementById('specialNote').value;
-    await api('/api/special', { method: 'PUT', body: JSON.stringify({ name, note }) });
-    showToast('Saved — live on the site now');
+    try {
+      await api('/api/special', { method: 'PUT', body: JSON.stringify({ name, note }) });
+      showToast('Saved — live on the site now');
+    } catch (e) {
+      showToast(e.message || 'Not saved');
+    }
   }
 
   // ---------- menu ----------
@@ -199,12 +216,12 @@
     const cats = [...new Set(menuCache.map(m => m.category))];
     el.innerHTML = cats.map(cat => {
       const items = menuCache.filter(m => m.category === cat);
-      return `<div class="menu-cat">${cat}</div>` + items.map(m => `
-        <div class="menu-row ${m.available ? '' : 'unavailable'}" data-id="${m.id}">
-          <input type="checkbox" ${m.available ? 'checked' : ''} onchange="toggleAvailable(${m.id}, this.checked)" title="Available">
-          <span class="name">${m.name}${m.note ? `<span class="note">${m.note}</span>` : ''}</span>
-          <input type="number" value="${m.price ?? ''}" placeholder="—" onchange="updatePrice(${m.id}, this.value)">
-          <button class="icon-btn" onclick="deleteItem(${m.id})" title="Delete">✕</button>
+      return `<div class="menu-cat">${esc(cat)}</div>` + items.map(m => `
+        <div class="menu-row ${m.available ? '' : 'unavailable'}" data-id="${Number(m.id)}">
+          <input type="checkbox" ${m.available ? 'checked' : ''} onchange="toggleAvailable(${Number(m.id)}, this.checked)" title="Available">
+          <span class="name">${esc(m.name)}${m.note ? `<span class="note">${esc(m.note)}</span>` : ''}</span>
+          <input type="number" min="0" value="${esc(m.price ?? '')}" placeholder="—" onchange="updatePrice(${Number(m.id)}, this.value)">
+          <button class="icon-btn" onclick="deleteItem(${Number(m.id)})" title="Delete">✕</button>
         </div>
       `).join('');
     }).join('');
@@ -215,8 +232,13 @@
     loadMenu();
   }
   async function updatePrice(id, price) {
-    await api('/api/menu/' + id, { method: 'PUT', body: JSON.stringify({ price: price === '' ? null : Number(price) }) });
-    showToast('Price updated');
+    try {
+      await api('/api/menu/' + id, { method: 'PUT', body: JSON.stringify({ price: price === '' ? null : Number(price) }) });
+      showToast('Price updated');
+    } catch (e) {
+      showToast(e.message || 'Price not saved');
+      loadMenu();
+    }
   }
   async function deleteItem(id) {
     if (!confirm('Remove this item from the menu?')) return;
@@ -229,7 +251,11 @@
     const name = document.getElementById('newName').value.trim();
     const price = document.getElementById('newPrice').value;
     if (!category || !name) return showToast('Category and name are required');
-    await api('/api/menu', { method: 'POST', body: JSON.stringify({ category, name, price: price === '' ? null : Number(price) }) });
+    try {
+      await api('/api/menu', { method: 'POST', body: JSON.stringify({ category, name, price: price === '' ? null : Number(price) }) });
+    } catch (e) {
+      return showToast(e.message || 'Item not added');
+    }
     document.getElementById('newCategory').value = '';
     document.getElementById('newName').value = '';
     document.getElementById('newPrice').value = '';
@@ -246,17 +272,17 @@
       <tr><th>Name</th><th>Phone</th><th>When</th><th>Guests</th><th>Note</th><th>Status</th><th></th></tr>
       ${bookings.map(b => `
         <tr>
-          <td>${b.name}</td>
-          <td>${b.phone}</td>
-          <td>${b.date}<br>${b.time}</td>
-          <td>${b.guests}</td>
-          <td>${b.note || '—'}</td>
-          <td><select onchange="setStatus(${b.id}, this.value)">
+          <td>${esc(b.name)}</td>
+          <td>${esc(b.phone)}</td>
+          <td>${esc(b.date)}<br>${esc(b.time)}</td>
+          <td>${esc(b.guests)}</td>
+          <td>${b.note ? esc(b.note) : '—'}</td>
+          <td><select onchange="setStatus(${Number(b.id)}, this.value)">
             <option value="new" ${b.status==='new'?'selected':''}>New</option>
             <option value="confirmed" ${b.status==='confirmed'?'selected':''}>Confirmed</option>
             <option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option>
           </select></td>
-          <td><button class="icon-btn" onclick="deleteBooking(${b.id})">✕</button></td>
+          <td><button class="icon-btn" onclick="deleteBooking(${Number(b.id)})">✕</button></td>
         </tr>
       `).join('')}
     </table>`;

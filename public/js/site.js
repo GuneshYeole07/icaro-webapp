@@ -168,13 +168,17 @@
       const pw = boardPasswordInput.value;
       boardUnlockBtn.disabled = true;
       fetch('/api/admin/check', { headers: { 'x-admin-key': pw } })
-        .then(r => {
-          if (!r.ok) throw new Error('wrong password');
+        .then(async r => {
+          if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            // 401 is a plain wrong password; anything else (locked out, admin not set up) says why
+            throw new Error(r.status === 401 ? 'Wrong password. Try again.' : (data.error || 'Unlock failed. Try again.'));
+          }
           adminKey = pw;
           showFieldsStep();
         })
-        .catch(() => {
-          boardLockMsg.textContent = 'Wrong password. Try again.';
+        .catch((err) => {
+          boardLockMsg.textContent = err.message || 'Unlock failed. Check your connection and try again.';
           boardPasswordInput.value = '';
           boardPasswordInput.focus();
         })
@@ -202,7 +206,13 @@
         headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
         body: JSON.stringify({ name: newName, note: newNote })
       })
-        .then(r => { if (!r.ok) throw new Error('save failed'); return r.json(); })
+        .then(async r => {
+          if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            throw new Error(data.error || 'Not saved. Try again.');
+          }
+          return r.json();
+        })
         .then(s => {
           activeName = s.name;
           activeNote = s.note;
@@ -210,7 +220,7 @@
           playBoard();
           showToast('Saved. Live for every visitor.');
         })
-        .catch(() => showToast('Not saved. Check your connection and try again.'))
+        .catch((err) => showToast(err.message && err.message !== 'Failed to fetch' ? err.message : 'Not saved. Check your connection and try again.'))
         .finally(() => { boardSaveBtn.disabled = false; });
     }
     boardSaveBtn.addEventListener('click', saveBoard);
@@ -392,7 +402,8 @@
         date: document.getElementById('bkDate').value,
         time: document.getElementById('bkTime').value,
         guests: document.getElementById('bkGuests').value,
-        note: document.getElementById('bkNote').value.trim()
+        note: document.getElementById('bkNote').value.trim(),
+        website: document.getElementById('bkWebsite') ? document.getElementById('bkWebsite').value : ''
       };
 
       fetch('/api/bookings', {
