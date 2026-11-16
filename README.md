@@ -12,7 +12,13 @@ visitor's own browser.
 - `db.js` — tiny file-based database (`data/db.json`, created automatically).
 - `data/menu_seed.json` — the starting menu (auto-loaded the first time the
   server runs, if `data/db.json` doesn't exist yet).
-- `public/index.html` — the public website.
+- `public/index.html` — the public website (markup only).
+- `public/css/site.css` and `public/js/site.js` — its styles and behaviour.
+- `public/images/gallery/` — gallery photos (`thumbs/` holds the small
+  versions the photo wheel loads first). `public/media/` holds the hero video.
+- `public/fonts/` — the typefaces, served from this site.
+- `public/images/dishes/` (optional) — add `<dish-name>.jpg` here, e.g.
+  `black-chana-hummus.jpg`, and it appears when a visitor taps that dish.
 - `public/admin.html` — the password-protected admin dashboard.
 
 ## Running it on your own laptop (to test)
